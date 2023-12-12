@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: Kia's Diner | API interface
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 1.0.0
+
+servers:
+  - url: "{protocol}://localhost:4000/api/{version}"
+    description: for local development
+    variables:
+      version:
+        enum:
+          - v1
+          - v2
+        default:  v1
+      protocol:
+        enum:
+          - http
+          - https
+        default:  http
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+
+paths:
+  /lco:
+    get:
+      tags:
+        - Strings
+      summary: Returns a greet message from LCO
+      responses:
+        200:
+          description: Successfully rendered
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "mystring"
+        
+        400:
+          description: Bad request
+        
+        500:
+          description: Internal server error
+
+  /lcoobject:
+    get:
+      tags:
+        - Objects
+      summary: Returns a greet message from LCO
+      responses:
+        200:
+          description: Return a unique course
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+        
+        400:
+          description: Bad request
+        
+        500:
+          description: Internal server error
+
+  /courses:
+    get:
+      tags:
+        - Array
+      summary: Returns All courses
+      responses:
+        200:
+          description: Return a unique course
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    price:
+                      type: number
+        
+        400:
+          description: Bad request
+        
+        500:
+          description: Internal server error
+
+
+
+  
